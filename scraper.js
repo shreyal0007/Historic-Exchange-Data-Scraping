@@ -14,7 +14,7 @@ async function fetchDataWithPuppeteer(url) {
     console.log("Page content (first 1000 chars):", pageContent.slice(0, 1000));
 
     try {
-      await page.waitForSelector('table[data-test="historical-prices"]', {
+      await page.waitForSelector('table', {
         visible: true,
         timeout: 60000,
       });
@@ -26,7 +26,7 @@ async function fetchDataWithPuppeteer(url) {
     const data = await page.evaluate(() => {
       const rows = [];
       const tableRows = document.querySelectorAll(
-        'table[data-test="historical-prices"] tbody tr'
+        'table tbody tr'
       );
       tableRows.forEach((row) => {
         const cells = row.querySelectorAll("td");
@@ -44,14 +44,30 @@ async function fetchDataWithPuppeteer(url) {
       });
       return rows;
     });
-
-    console.log("Fetched Data:", data);
     await browser.close();
     return data;
   } catch (error) {
     console.error("Error fetching data:", error.message);
     await browser.close();
     return [];
+  }
+}
+
+// Assuming you are using axios to fetch data from Yahoo Finance API or web scraping
+const axios = require('axios');
+
+// Dummy implementation for scraping; replace with actual scraping logic
+async function scrapeForexData(from, to, period) {
+  // Example URL (replace with actual endpoint and logic)
+  const url = `https://finance.yahoo.com/quote/${from}${to}=X/history?p=${from}${to}=X&period=${period}`;
+  
+  try {
+    const response = await axios.get(url);
+    const data = response.data; // Parse the data as needed
+    // Process and store data in the database (or in-memory store)
+    console.log(`Fetched data for ${from}-${to} (${period})`);
+  } catch (error) {
+    console.error(`Failed to fetch data for ${from}-${to} (${period}):`, error.message);
   }
 }
 
@@ -139,3 +155,4 @@ async function main() {
 }
 
 main();
+module.exports = { scrapeForexData };
