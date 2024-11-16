@@ -26,13 +26,8 @@ This project provides a backend service to fetch historical forex data, store it
 
 ```bash
 git clone <repository_url>
-cd <repository_directory>
 
-Here is a markdown file that documents the steps and API endpoints for the backend and data scraping process:
 
-markdown
-Copy code
-# Forex Data Scraping and API Documentation
 
 ## 1. Start the Backend API
 
@@ -45,7 +40,8 @@ Copy code
 node App.js
 The API will be available at http://localhost:3000.
 
-2. Schedule Data Scraping
+
+##2. Schedule Data Scraping
 Run the cron job to scrape forex data daily:
 
 bash
@@ -58,7 +54,7 @@ GBP-INR for: 1W, 1M, 3M, 6M, 1Y
 AED-INR for: 1W, 1M, 3M, 6M, 1Y
 Scraped data will be stored in the exchange_data.db SQLite database.
 
-3. API Endpoints
+##3. API Endpoints
 POST /api/forex-data
 This endpoint fetches historical forex data for a specific currency pair and time period.
 
